@@ -53,23 +53,40 @@ public class UserController {
         return users;
     }
 
-    @DeleteMapping("/user/{id}")
-    public String deleteUser(@PathVariable("id") Integer id) throws Exception{
+//    @DeleteMapping("/user/{id}")
+//    public String deleteUser(@PathVariable("id") Integer id) throws Exception{
+//
+//        Optional<User> user = userRepo.findById(id);
+//
+//        if(user.isEmpty()){
+//            throw new Exception("User not exist inorder to delete");
+//        }
+//
+//        userRepo.delete(user.get());
+//        return "User has been deleted " + id;
+//    }
 
-        Optional<User> user = userRepo.findById(id);
+//    @GetMapping("/user/{email}")
+//    public User findByEmail(@PathVariable("email") String email){
+//
+//        User user = userService.findUserByEmail(email);
+//
+//        return user;
+//    }
 
-        if(user.isEmpty()){
-            throw new Exception("User not exist inorder to delete");
-        }
+    @PutMapping("/user/follow/{userId1}/{userId2}")
+    public User followUserHandler(@PathVariable Integer userId1,@PathVariable Integer userId2) throws Exception {
 
-        userRepo.delete(user.get());
-        return "User has been deleted " + id;
+        User user = userService.followUser(userId1,userId2);
+
+        return user;
     }
 
-    @GetMapping("/user/{email}")
-    public User findByEmail(@PathVariable("email") String email){
 
-        User user = userService.findUserByEmail(email);
+    @GetMapping("/user/search")
+    public List<User> searchUser(@RequestParam("query") String query){
+
+        List<User> user = userService.searchUser(query);
 
         return user;
     }

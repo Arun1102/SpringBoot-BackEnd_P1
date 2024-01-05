@@ -2,6 +2,7 @@ package com.arun.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,9 +21,9 @@ public class User {
     private String email;
     private String password;
 
-    private List<Integer> followers;
+    private List<Integer> followers = new ArrayList<>();
 
-    private List<Integer> followings;
+    private List<Integer> followings = new ArrayList<>();
 
     private String gender;
 
