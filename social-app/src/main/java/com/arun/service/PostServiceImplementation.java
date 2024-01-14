@@ -21,6 +21,7 @@ public class PostServiceImplementation implements PostService {
     @Autowired
     UserService userService ;
 
+    @Autowired
     UserRepository userRepo;
 
     @Override
@@ -34,8 +35,10 @@ public class PostServiceImplementation implements PostService {
         newPost.setImage(post.getImage());
         newPost.setVideo(post.getVideo());
         newPost.setUser(user);
-//        newPost.setCreatedAt(LocalDateTime.now());
-        return newPost;
+        newPost.setCreatedAt(LocalDateTime.now());
+
+        Post savedPost = postRepo.save(newPost);
+        return savedPost;
 
     }
 

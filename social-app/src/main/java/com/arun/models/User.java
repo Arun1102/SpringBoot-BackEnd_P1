@@ -1,5 +1,6 @@
 package com.arun.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class User {
 
     private List<Integer> followings = new ArrayList<>();
 
+    //can use DTO instead of jsonignore
+    @JsonIgnore
+    @ManyToMany
     private List<Post> savedPost = new ArrayList<>();
 
 

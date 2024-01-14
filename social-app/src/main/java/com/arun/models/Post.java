@@ -1,5 +1,6 @@
 package com.arun.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -20,11 +21,15 @@ public class Post {
 
     private String video;
 
+
+
+    @ManyToOne
     private User user;
 
-    private LocalDateTime createdAt;
-
+    @OneToMany
     private List<User> liked = new ArrayList<>();
+
+    private LocalDateTime createdAt;
 
     public Post(){
 
