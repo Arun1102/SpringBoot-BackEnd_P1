@@ -1,5 +1,6 @@
 package com.arun.service;
 
+import com.arun.config.JwtProvider;
 import com.arun.models.User;
 import com.arun.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,19 +44,19 @@ public class UserServiceImplementation implements UserService{
     }
 
     @Override
-    public User followUser(Integer userId1, Integer userId2) throws Exception {
+    public User followUser(Integer reqUserId, Integer userId2) throws Exception {
 
-        User user1 = findUserById(userId1);
+        User reqUser = findUserById(reqUserId);
         User user2 = findUserById(userId2);
 
-        user2.getFollowers().add(user1.getId());
-        user1.getFollowings().add(user2.getId());
+        user2.getFollowers().add(reqUser.getId());
+        reqUser.getFollowings().add(user2.getId());
 
-        userRepo.save(user1);
+        userRepo.save(reqUser);
         userRepo.save(user2);
 
 
-        return user1;
+        return reqUser;
     }
 
     @Override
@@ -79,6 +80,10 @@ public class UserServiceImplementation implements UserService{
             oldUser.setEmail(user.getEmail());
         }
 
+        if(user.getGender()!=null){
+            oldUser.setGender(user.getGender());
+        }
+
         User updatedUser = userRepo.save(oldUser);
 
         return updatedUser;
@@ -89,5 +94,14 @@ public class UserServiceImplementation implements UserService{
 
         return userRepo.searchUser(query);
 
+    }
+
+    @Override
+    public User findUserByJWT(String jwt) {
+
+        String email = JwtProvider.getEmailFromJwtToken(jwt);
+
+        User user = userRepo.findByEmail(email);
+        return user;
     }
 }
