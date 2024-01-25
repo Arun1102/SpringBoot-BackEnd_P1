@@ -1,0 +1,43 @@
+package com.arun.controller;
+
+import com.arun.models.Message;
+import com.arun.models.User;
+import com.arun.service.MessageService;
+import com.arun.service.MessageServiceImplementation;
+import com.arun.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class CreateMessage {
+
+    @Autowired
+    private MessageService messageService;
+
+    @Autowired
+    private UserService userService;
+
+
+    @PostMapping("/api/messages/chat/{chatId}")
+    public Message createMessage(@RequestBody Message req,
+                                 @RequestHeader("Authorization") String jwt,
+                                 @PathVariable Integer chatId) throws Exception {
+        User user = userService.findUserByJWT(jwt);
+
+        Message message = messageService.createMessage(user,chatId,req);
+        return message;
+    }
+
+
+    @GetMapping("/api/messages/chat/{chatId}")
+    public List<Message> findChatsMessage(
+                                 @RequestHeader("Authorization") String jwt,
+                                 @PathVariable Integer chatId) throws Exception {
+//        User user = userService.findUserByJWT(jwt);
+        List<Message> message = messageService.findChatsMessage(chatId);
+        return message;
+    }
+
+}
