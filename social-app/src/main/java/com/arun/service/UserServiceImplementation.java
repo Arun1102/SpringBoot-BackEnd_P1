@@ -1,5 +1,6 @@
 package com.arun.service;
 
+import com.arun.Exception.UserException;
 import com.arun.config.JwtProvider;
 import com.arun.models.User;
 import com.arun.repository.UserRepository;
@@ -30,7 +31,7 @@ public class UserServiceImplementation implements UserService{
             return user.get();
         }
 
-        throw new Exception("Not found user");
+        throw new Exception("User not found from the userId: " + userId);
     }
 
     @Override

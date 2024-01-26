@@ -1,5 +1,6 @@
 package com.arun.service;
 
+import com.arun.Exception.UserException;
 import com.arun.models.User;
 
 import java.util.List;
